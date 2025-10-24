@@ -69,6 +69,17 @@ function createBall(x, y, radius = 40) {
                 // Se sim, move a bola de volta para a borda da tela e inverte sua velocidade y
                 this.y = canvas.height - this.radius;
                 this.vy *= -0.8;
+                
+                // Aplica atrito quando a bola está no chão
+                this.vx *= 0.98;
+                
+                // Para a bola completamente se a velocidade for muito baixa
+                if(Math.abs(this.vx) < 0.05) {
+                    this.vx = 0;
+                }
+                if(Math.abs(this.vy) < 0.05) {
+                    this.vy = 0;
+                }
             }
         }
     };
