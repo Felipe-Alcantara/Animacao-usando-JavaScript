@@ -186,23 +186,32 @@ function draw() {
     ctx.fillStyle = '#1b1d21';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Texto grande em duas linhas com cor da bolinha
+    // Texto grande em duas linhas, ambos centralizados no centro do canvas
     ctx.font = `bold ${fontSize}px Arial, sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillStyle = '#ffffff'; // Cor da bolinha
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 6;
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = Math.max(4, Math.floor(fontSize * 0.08));
     const centerX = canvas.width / 2;
-    let startY = textBox.y;
+    // Calcule posição inicial vertical para as linhas (centralizado como bloco)
+    const spacing = Math.floor(fontSize * 0.3);
+    const totalHeight = fontSize * bigTextLines.length + spacing;
+    const startY = Math.floor((canvas.height - totalHeight) / 2);
 
     for (let i = 0; i < bigTextLines.length; i++) {
         const line = bigTextLines[i];
-        const yOffset = i === 1 ? fontSize * 0.5 : 0; // Ajusta o 'JavaScript' para ficar mais centralizado
-        // Stroke
-        ctx.strokeText(line, centerX, startY + i * (fontSize + fontSize * 0.3) + yOffset);
-        // Fill
-        ctx.fillText(line, centerX, startY + i * (fontSize + fontSize * 0.3) + yOffset);
+        const y = startY + i * (fontSize + spacing);
+        // Ajuste fino: desloca a segunda linha um pouco para a esquerda
+        const horizontalShift = (i === 1) ? -Math.floor(fontSize * 0.70) : 0; // tweak this multiplier if needed
+        const x = centerX + horizontalShift;
+        // Primeiro desenha o contorno escuro pequeno para destacar
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = Math.max(4, Math.floor(fontSize * 0.08));
+        ctx.strokeText(line, x, y);
+        // Em seguida o preenchimento com a cor da bolinha
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(line, x, y);
     }
 
     // Desenha todas as bolas
