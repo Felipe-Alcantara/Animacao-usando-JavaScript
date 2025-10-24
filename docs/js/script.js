@@ -2,6 +2,8 @@
 const bigTextLines = ["Animação Usando", "      JavaScript"];
 let fontSize = 80;
 let textBox = {x: 0, y: 0, w: 0, h: 0};
+// Limite superior (em pixels) — a bola não poderá ultrapassar este valor
+let topLimit = 24;
 
 function updateTextBox() {
     fontSize = Math.floor(canvas.width > canvas.height ? canvas.height * 0.08 : canvas.width * 0.06); // Reduz o tamanho da fonte
@@ -86,6 +88,15 @@ function createBall(x, y, radius = 40) {
                 // Se sim, move a bola de volta para a borda da tela e inverte sua velocidade x
                 this.x = canvas.width - this.radius;
                 this.vx *= -0.8;
+            }
+
+            // Verifica se a bola atingiu o topo definido (topLimit)
+            if(this.y - this.radius < topLimit) {
+                // Move a bola para baixo do limite e inverte a velocidade vertical
+                this.y = topLimit + this.radius;
+                this.vy *= -0.8;
+                // Pequeno amortecimento horizontal ao bater no topo
+                this.vx *= 0.98;
             }
 
             // Verifica se a bola atingiu o fundo da tela
@@ -185,6 +196,11 @@ function draw() {
     // Fundo
     ctx.fillStyle = '#1b1d21';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Desenha uma barra no topo para indicar o limite superior
+    ctx.fillStyle = '#2f3336';
+    const barHeight = Math.max(3, Math.floor(topLimit * 0.6));
+    ctx.fillRect(0, topLimit - Math.floor(barHeight/2), canvas.width, barHeight);
 
     // Texto grande em duas linhas, ambos centralizados no centro do canvas
     ctx.font = `bold ${fontSize}px Arial, sans-serif`;
