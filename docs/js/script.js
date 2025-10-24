@@ -1,3 +1,27 @@
+// Parâmetros do texto grande
+const bigTextLines = ["Animação Usando", "      JavaScript"];
+let fontSize = 80;
+let textBox = {x: 0, y: 0, w: 0, h: 0};
+
+function updateTextBox() {
+    fontSize = Math.floor(canvas.width > canvas.height ? canvas.height * 0.08 : canvas.width * 0.06); // Reduz o tamanho da fonte
+    ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+    // Calcula largura máxima entre as linhas
+    let maxWidth = 0;
+    for (const line of bigTextLines) {
+        const metrics = ctx.measureText(line);
+        if (metrics.width > maxWidth) maxWidth = metrics.width;
+    }
+    // Altura total: duas linhas + espaçamento
+    const lineSpacing = fontSize * 0.3;
+    const textHeight = fontSize * bigTextLines.length + lineSpacing;
+    textBox.w = maxWidth;
+    textBox.h = textHeight;
+    textBox.x = (canvas.width - maxWidth) / 2;
+    textBox.y = (canvas.height - textHeight) / 2;
+}
+
+window.addEventListener('resize', updateTextBox);
 // Seleciona o elemento canvas na página
 const canvas = document.querySelector('canvas');
 // Obtém o contexto de desenho 2D do canvas
@@ -91,12 +115,57 @@ function createBall(x, y, radius = 40) {
     return ball;
 }
 
-// Cria uma nova bola no meio da tela
-createBall(canvas.width / 2, 100);
+// Cria uma nova bola abaixo do texto
+function spawnBallBelowText() {
+    updateTextBox();
+    const x = canvas.width / 2;
+    const y = textBox.y + textBox.h + 60;
+    createBall(x, y);
+}
+
+spawnBallBelowText();
 
 // Define uma função para atualizar todas as bolas
+// Função de colisão bola-retângulo (bounding box do texto)
+function ballHitsText(ball) {
+    // Caixa do texto
+    const bx = textBox.x, by = textBox.y, bw = textBox.w, bh = textBox.h;
+    // Ponto mais próximo do centro da bola dentro do retângulo
+    const closestX = Math.max(bx, Math.min(ball.x, bx + bw));
+    const closestY = Math.max(by, Math.min(ball.y, by + bh));
+    // Distância do centro da bola ao ponto mais próximo
+    const dx = ball.x - closestX;
+    const dy = ball.y - closestY;
+    return (dx*dx + dy*dy) < (ball.radius*ball.radius);
+}
+
 function update() {
-    for(const ball of balls) ball.update();
+    for(const ball of balls) {
+        ball.update();
+        // Colisão com o texto
+        if(ballHitsText(ball)) {
+            // Empurra a bola para fora do texto
+            // Calcula o vetor de afastamento
+            const bx = textBox.x, by = textBox.y, bw = textBox.w, bh = textBox.h;
+            const closestX = Math.max(bx, Math.min(ball.x, bx + bw));
+            const closestY = Math.max(by, Math.min(ball.y, by + bh));
+            const dx = ball.x - closestX;
+            const dy = ball.y - closestY;
+            const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+            // Move a bola para fora
+            ball.x = closestX + dx/dist * (ball.radius+0.1);
+            ball.y = closestY + dy/dist * (ball.radius+0.1);
+            // Reflete a velocidade
+            const normalX = dx/dist;
+            const normalY = dy/dist;
+            const dot = ball.vx*normalX + ball.vy*normalY;
+            ball.vx -= 2*dot*normalX;
+            ball.vy -= 2*dot*normalY;
+            // Amortecimento
+            ball.vx *= 0.8;
+            ball.vy *= 0.8;
+        }
+    }
 }
 
 // Define uma função para desenhar um círculo preenchido
@@ -113,16 +182,36 @@ function fillCircle(x, y, radius) {
 
 // Define uma função para desenhar a cena
 function draw() {
-    // Define a cor de preenchimento para preto
+    // Fundo
     ctx.fillStyle = '#1b1d21';
-    // Desenha um retângulo preenchido que cobre toda a tela
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Define a cor de preenchimento para branco
-    ctx.fillStyle = '#ffffff';
+    // Texto grande em duas linhas com cor da bolinha
+    ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = '#ffffff'; // Cor da bolinha
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 6;
+    const centerX = canvas.width / 2;
+    let startY = textBox.y;
+
+    for (let i = 0; i < bigTextLines.length; i++) {
+        const line = bigTextLines[i];
+        const yOffset = i === 1 ? fontSize * 0.5 : 0; // Ajusta o 'JavaScript' para ficar mais centralizado
+        // Stroke
+        ctx.strokeText(line, centerX, startY + i * (fontSize + fontSize * 0.3) + yOffset);
+        // Fill
+        ctx.fillText(line, centerX, startY + i * (fontSize + fontSize * 0.3) + yOffset);
+    }
+
     // Desenha todas as bolas
+    ctx.fillStyle = '#ffffff';
     for(const ball of balls) fillCircle(ball.x, ball.y, ball.radius);
 }
+
+// Inicializa a caixa de colisão do texto
+updateTextBox();
 
 // Define uma função para animar a cena
 function animate() {
