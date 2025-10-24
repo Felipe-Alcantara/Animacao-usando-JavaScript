@@ -219,14 +219,18 @@ function draw() {
         const line = bigTextLines[i];
         const y = startY + i * (fontSize + spacing);
         // Ajuste fino: desloca a segunda linha um pouco para a esquerda
-        const horizontalShift = (i === 1) ? -Math.floor(fontSize * 0.8) : 0; // tweak this multiplier if needed
+        const horizontalShift = (i === 1) ? -Math.floor(fontSize * 1) : 0; // tweak this multiplier if needed
         const x = centerX + horizontalShift;
-        // Primeiro desenha o contorno escuro pequeno para destacar
+        // Primeiro desenha o contorno escuro para destacar
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = Math.max(4, Math.floor(fontSize * 0.08));
         ctx.strokeText(line, x, y);
-        // Em seguida o preenchimento com a cor da bolinha
-        ctx.fillStyle = '#ffffff';
+        // Em seguida o preenchimento: primeira linha branca, segunda linha amarela
+        if (i === 1) {
+            ctx.fillStyle = '#ffb300'; // amarelo para "JavaScript"
+        } else {
+            ctx.fillStyle = '#ffffff';
+        }
         ctx.fillText(line, x, y);
     }
 
