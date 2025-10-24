@@ -20,6 +20,14 @@ window.addEventListener('resize', function() {
 // Cria uma lista vazia para armazenar as bolas
 const balls = [];
 
+// Variáveis para controlar o arrasto da bola
+let isDragging = false;
+let draggedBall = null;
+let mouseX = 0;
+let mouseY = 0;
+let lastMouseX = 0;
+let lastMouseY = 0;
+
 // Define uma função para criar uma nova bola
 function createBall(x, y, radius = 40) {
     // Cria um novo objeto bola
@@ -31,6 +39,11 @@ function createBall(x, y, radius = 40) {
         vy: 0, // Velocidade y da bola
         // Define uma função para atualizar a posição e a velocidade da bola
         update: function() {
+            // Se a bola está sendo arrastada, não aplica física
+            if(isDragging && draggedBall === this) {
+                return;
+            }
+            
             // Aumenta a velocidade y da bola (simulando a gravidade)
             this.vy += 0.5;
             // Atualiza a posição x e y da bola com base em suas velocidades
@@ -112,3 +125,70 @@ function animate() {
 
 // Inicia a animação
 animate();
+
+// Função para verificar se o mouse está sobre uma bola
+function getBallAtPosition(x, y) {
+    // Verifica as bolas de trás para frente (a última desenhada primeiro)
+    for(let i = balls.length - 1; i >= 0; i--) {
+        const ball = balls[i];
+        const dx = x - ball.x;
+        const dy = y - ball.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if(distance < ball.radius) {
+            return ball;
+        }
+    }
+    return null;
+}
+
+// Evento de mouse pressionado
+canvas.addEventListener('mousedown', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
+    
+    // Verifica se clicou em alguma bola
+    draggedBall = getBallAtPosition(mouseX, mouseY);
+    
+    if(draggedBall) {
+        isDragging = true;
+        // Zera as velocidades ao pegar a bola
+        draggedBall.vx = 0;
+        draggedBall.vy = 0;
+    }
+});
+
+// Evento de movimento do mouse
+canvas.addEventListener('mousemove', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+    
+    if(isDragging && draggedBall) {
+        // Move a bola para a posição do mouse
+        draggedBall.x = mouseX;
+        draggedBall.y = mouseY;
+        
+        // Calcula a velocidade baseada no movimento do mouse
+        draggedBall.vx = mouseX - lastMouseX;
+        draggedBall.vy = mouseY - lastMouseY;
+    }
+    
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
+});
+
+// Evento de mouse solto
+canvas.addEventListener('mouseup', function(e) {
+    if(isDragging && draggedBall) {
+        // Aplica a velocidade do arrasto ao soltar
+        draggedBall.vx *= 1.5; // Multiplica para dar mais impulso
+        draggedBall.vy *= 1.5;
+    }
+    
+    isDragging = false;
+    draggedBall = null;
+});
