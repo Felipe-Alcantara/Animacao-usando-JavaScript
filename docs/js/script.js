@@ -199,7 +199,7 @@ function draw() {
 
     // Desenha uma barra no topo para indicar o limite superior
     ctx.fillStyle = '#2f3336';
-    const barHeight = Math.max(3, Math.floor(topLimit * 0.6));
+    const barHeight = Math.max(3, Math.floor(topLimit * 0.1));
     ctx.fillRect(0, topLimit - Math.floor(barHeight/2), canvas.width, barHeight);
 
     // Texto grande em duas linhas, ambos centralizados no centro do canvas
@@ -208,10 +208,10 @@ function draw() {
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#ffffff';
     ctx.strokeStyle = '#000000';
-    ctx.lineWidth = Math.max(4, Math.floor(fontSize * 0.08));
+    ctx.lineWidth = Math.max(4, Math.floor(fontSize * 0.1));
     const centerX = canvas.width / 2;
     // Calcule posição inicial vertical para as linhas (centralizado como bloco)
-    const spacing = Math.floor(fontSize * 0.3);
+    const spacing = Math.floor(fontSize * 0);
     const totalHeight = fontSize * bigTextLines.length + spacing;
     const startY = Math.floor((canvas.height - totalHeight) / 2);
 
@@ -219,7 +219,7 @@ function draw() {
         const line = bigTextLines[i];
         const y = startY + i * (fontSize + spacing);
         // Ajuste fino: desloca a segunda linha um pouco para a esquerda
-        const horizontalShift = (i === 1) ? -Math.floor(fontSize * 0.70) : 0; // tweak this multiplier if needed
+        const horizontalShift = (i === 1) ? -Math.floor(fontSize * 0.8) : 0; // tweak this multiplier if needed
         const x = centerX + horizontalShift;
         // Primeiro desenha o contorno escuro pequeno para destacar
         ctx.strokeStyle = '#000000';
