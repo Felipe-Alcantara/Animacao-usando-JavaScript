@@ -13,7 +13,22 @@
 
 ---
 
-## 📋 Sobre o Projeto
+## � Índice
+
+- [📋 Sobre o Projeto](#-sobre-o-projeto)
+- [🚀 Demonstração](#-demonstração)
+- [🛠️ Tecnologias e Arquivos Principais](#️-tecnologias-e-arquivos-principais)
+- [📂 Estrutura do Projeto](#-estrutura-do-projeto)
+- [🎓 Conceitos e Trechos Relevantes](#-conceitos-e-trechos-relevantes)
+- [💻 Como Executar Localmente](#-como-executar-localmente)
+- [🔭 Possíveis Extensões](#-possíveis-extensões)
+- [🤝 Contribuições](#-contribuições)
+- [📄 Licença](#-licença)
+- [👨‍💻 Autor](#-autor)
+
+---
+
+## �📋 Sobre o Projeto
 
 Este projeto nasceu em abril de 2024, quando eu estava começando a aprender **HTML**, **CSS** e **JavaScript**. Fiquei algumas ideias salvas e, em outubro de 2025, resolvi resgatar e aprimorar o código — resultado: esta versão mais polida e interativa.
 
