@@ -65,7 +65,8 @@ FIX: Unificada a geometria em `updateTextBox()` (considerando o deslocamento da 
 
 ## 🔗 INTEGRAÇÕES & SERVIÇOS EXTERNOS
 
-[—] GitHub Pages — deploy automático a partir de `main` → `/docs`. URL: https://felipe-alcantara.github.io/Animacao-usando-JavaScript/
+[—] GitHub Pages — deploy automático a partir de `main` → `/docs`.
+[2026-06-01] Domínio customizado **https://animacao.felixo.com.br/** (CNAME no Registro.br → `felipe-alcantara.github.io`; arquivo `docs/CNAME`). O endereço antigo `felipe-alcantara.github.io/Animacao-usando-JavaScript/` continua funcionando.
 Sem APIs, credenciais ou serviços externos.
 
 ---

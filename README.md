@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Demo](https://img.shields.io/badge/Demo-Live-success?style=for-the-badge)](https://felipe-alcantara.github.io/Animacao-usando-JavaScript/)
+[![Demo](https://img.shields.io/badge/Demo-Live-success?style=for-the-badge)](https://animacao.felixo.com.br/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
@@ -10,7 +10,7 @@
 
 **Simulação interativa de física com a Canvas API — código aberto e didático.**
 
-[🌐 Demo Online](https://felipe-alcantara.github.io/Animacao-usando-JavaScript/) • [📋 Sobre](#-sobre-o-projeto) • [💻 Como Usar](#-como-executar-localmente) • [🎓 Conceitos](#-conceitos-e-trechos-relevantes)
+[🌐 Demo Online](https://animacao.felixo.com.br/) • [📋 Sobre](#-sobre-o-projeto) • [💻 Como Usar](#-como-executar-localmente) • [🎓 Conceitos](#-conceitos-e-trechos-relevantes)
 
 </div>
 
@@ -35,7 +35,7 @@
 
 > **🚀 VEJA RODANDO AGORA, DIRETO NO NAVEGADOR**
 >
-> **[👉 Abrir a demo ao vivo 👈](https://felipe-alcantara.github.io/Animacao-usando-JavaScript/)**
+> **[👉 Abrir a demo ao vivo 👈](https://animacao.felixo.com.br/)**
 
 ### Como interagir
 
@@ -125,7 +125,7 @@ this.vx *= CONFIG.friction;       // 0.98
 
 ### Opção 1: Forma mais fácil (Recomendado!) 🌐
 
-**🚀 Link direto:** [felipe-alcantara.github.io/Animacao-usando-JavaScript](https://felipe-alcantara.github.io/Animacao-usando-JavaScript/)
+**🚀 Link direto:** [animacao.felixo.com.br](https://animacao.felixo.com.br/)
 
 ### Opção 2: Abrir o arquivo local
 
