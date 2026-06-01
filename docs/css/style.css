@@ -10,6 +10,8 @@ body {
 }
 
 canvas {
+    display: block; /* remove o gap inline e evita barra de rolagem */
     width: 100%;
     height: 100%;
+    touch-action: none; /* impede gestos do navegador durante o arraste no mobile */
 }
